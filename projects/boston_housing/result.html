@@ -12143,6 +12143,7 @@ Standard deviation of prices: $165,171.13
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We wouldn't have a way to see how well our model is performing, in case we don't have a test set. Also we can plot some learning curves and see what might go wrong or how to improve further.</p>
+<p>If we don't have a test model, then model might fail since we are only evaluating based on the same data set that we used to train. ( Model already knows what the output would be, but we need to predict for a new random data point which will be similar but not same as the training data set)</p>
 
 </div>
 </div>
@@ -13238,7 +13239,7 @@ The training data has a good accuracy, but the testing data is failing very badl
 <p>What about the testing curve?
     Testing curve would be depended on how training curve is trained, so if we increase number of points in training data and model doesn't over fit then testing curve would improve it's performance.</p>
 <p>Would having more training points benefit the model?
-    Yes, because of reasons mentioned above.</p>
+    To a certain limit yes, but beyond 350 points No It wouldn't matter because the testing score hasn't improved a lot.</p>
 
 </div>
 </div>
