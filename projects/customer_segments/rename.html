@@ -13739,7 +13739,7 @@ SUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># TODO: Scale the data using the natural logarithm</span>
@@ -13750,6 +13750,8 @@ SUVORK5CYII=
 
 <span class="c1"># Produce a scatter matrix for each pair of newly-transformed features</span>
 <span class="n">pd</span><span class="o">.</span><span class="n">scatter_matrix</span><span class="p">(</span><span class="n">log_data</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">,</span> <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">diagonal</span> <span class="o">=</span> <span class="s1">&#39;kde&#39;</span><span class="p">);</span>
+
+<span class="k">print</span> <span class="n">log_data</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -13759,6 +13761,27 @@ SUVORK5CYII=
 <div class="output_wrapper">
 <div class="output">
 
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>                     Fresh      Milk   Grocery    Frozen  Detergents_Paper  \
+Fresh             1.000000 -0.019834 -0.132713  0.383996         -0.155871   
+Milk             -0.019834  1.000000  0.758851 -0.055316          0.677942   
+Grocery          -0.132713  0.758851  1.000000 -0.164524          0.796398   
+Frozen            0.383996 -0.055316 -0.164524  1.000000         -0.211576   
+Detergents_Paper -0.155871  0.677942  0.796398 -0.211576          1.000000   
+Delicatessen      0.255186  0.337833  0.235728  0.254718          0.166735   
+
+                  Delicatessen  
+Fresh                 0.255186  
+Milk                  0.337833  
+Grocery               0.235728  
+Frozen                0.254718  
+Detergents_Paper      0.166735  
+Delicatessen          1.000000  
+</pre>
+</div>
+</div>
 
 <div class="output_area"><div class="prompt"></div>
 
@@ -18354,20 +18377,24 @@ NKsAAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Answer:</strong>
-Dimension 1    0.4430
-Dimension 2    0.7068
-Dimension 3    0.8299
-Dimension 4    0.9311
-Dimension 5    0.9796</p>
+<p><strong>Answer:</strong></p>
 <p>How much variance in the data is explained in total by the first and second principal component?</p>
 
 <pre><code>sum of both first and second = .7068
+
+We can see Detergents_paper along with Fresh has a very good variance, indicating it's covered all of that feature
+Fresh according to corelation matrix doesn't relate to any other features.
+
+Where as Detergetns_paper has around .7 corelation with milk and grocery, so It might have raised the variance of other features too.
 
 </code></pre>
 <p>What about the first four principal components?</p>
 
 <pre><code>sum of 1-4 = 0.9311
+When First 4 components are compared, We have covered Fresh and Detergents_paper from first two.
+4th dimension covers frozen and 3rd delicatesesen.
+Milk could be predicted from grocery and further we can predict frozen based on correlation matrix. Thus being
+able to cover all features based on just 4 dimensions since data is corelated.
 
 </code></pre>
 <p>Using the visualization provided above, discuss what the first four dimensions best represent in terms of customer spending.</p>
@@ -19708,10 +19735,10 @@ yI/9P4/ytB7LYYVLAAAAAElFTkSuQmCC
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong></p>
-<p>K means is useful when number of clusters is known in prior(Hard clustering). It works faster when K is small and data is large.</p>
-<p>Advantages of Gaussian Mixture Model:-</p>
-<p>When we are not sure about number of clusters(Soft Clustering). Gaussian mixture can assume differnet shapes as well (elliptical, circular ..).</p>
-<p>Considering above two points, Because I'm not sure about clusters. I would prefer chooing Gaussian Mixture Mode.</p>
+<p>K means is better for high dimensional data, and has better running time.
+It also does hard clustering. i.e, it allocates k centroids and realtes each point in cluster to either of this with these k points. Works well when data is spherical</p>
+<p>Gausian Mixture Model on the other hand considers the probability of each point in cluster belonging to either of the clusters we want to classify ( soft clustering ) Shape is not a relavent feature for this model.</p>
+<p>Since the number of dimensions we are considering are less, and we are also not sure about the shapes of the cluster I'm selecting Gausian Mixture Model.</p>
 
 </div>
 </div>
