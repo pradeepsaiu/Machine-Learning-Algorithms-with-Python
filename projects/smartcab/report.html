@@ -15936,26 +15936,24 @@ alpha = 0.8, I think for this model exploration should be less significant, sinc
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>/-----------------------------------------
-| State-action rewards from Q-Learning
------------------------------------------
-No traffic and light is good so forward is optimal choice.</p>
-<p>( WayPoint, Light, Oncoming)
-('forward', 'green', None)
- -- forward : 2.54
- -- None : -4.16
- -- right : 0.56
- -- left : 0.42</p>
+<p><strong> State-action rewards from Q-Learning</strong></p>
+<p>No traffic and light is good so forward is optimal choice.</p>
+<p>( WayPoint, Light, Oncoming)</p>
+<p>('forward', 'green', None)</p>
+<p>-- forward : 2.54</p>
+<p>-- None : -4.16</p>
+<p>-- right : 0.56</p>
+<p>-- left : 0.42</p>
 <p>Agent should go left, but since there is oncoming traffic
 agent avoids coolision either by staying or going forward.
 This should have more weight for None agent can stay at same place and go afterwards
 in an ideal world that would be the case. It gets more reward when it moves so it goes forward and 
-finds a different route.
-('left', 'green', 'forward')
- -- forward : 1.25
- -- None : 0.00
- -- right : -0.01
- -- left : -16.61</p>
+finds a different route.</p>
+<p>('left', 'green', 'forward')</p>
+<p>-- forward : 1.25</p>
+<p>-- None : 0.00</p>
+<p>-- right : -0.01</p>
+<p>-- left : -16.61</p>
 
 </div>
 </div>
