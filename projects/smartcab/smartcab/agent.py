@@ -24,7 +24,7 @@ class LearningAgent(Agent):
         ###########
         # Set any additional class parameters as needed
         self.trails = 1
-        self.a=0
+
     def decay(self):
         """Decays the epsilon value using 1/(t*t)
            t = number of trials """
@@ -69,7 +69,7 @@ class LearningAgent(Agent):
         ###########
         # Set 'state' as a tuple of relevant data for the agent
         # state = (waypoint,inputs['light'],inputs['left'],inputs['right'],inputs['oncoming'])
-        state = (waypoint,inputs['light'],inputs['oncoming'])
+        state = (waypoint,inputs['light'],inputs['oncoming'],inputs['left'] == 'forward')
         return state
 
 
@@ -82,7 +82,17 @@ class LearningAgent(Agent):
         ###########
         # Calculate the maximum Q-value of all actions for a given state
 
-        maxQ = max(self.Q[state], key=self.Q[state].get)
+        temp_max = self.Q[state][ next(iter(self.Q[state])) ]
+        maxQ = []
+        for key,value in self.Q[state].iteritems():
+            if( temp_max < value ):
+                maxQ = []
+                maxQ.append(key)
+                temp_max = value
+            elif( temp_max == value):
+                maxQ.append(key)
+            else:
+                pass
 
         return maxQ
 
@@ -99,7 +109,7 @@ class LearningAgent(Agent):
         if state not in self.Q:
             self.Q[state] = dict(dict())
             for each in self.valid_actions:
-                self.Q[state][each] = 0
+                self.Q[state][each] = 0.0
         return
 
 
@@ -120,13 +130,10 @@ class LearningAgent(Agent):
         # When learning, choose a random action with 'epsilon' probability
         # Otherwise, choose an action with the highest Q-value for the current state
 
-        if(self.epsilon!=0):
-            self.a = self.epsilon
         if(self.learning == False or choice < self.epsilon*100):
             action = random.choice(self.valid_actions)
         else:
-            action = self.get_maxQ(state)
-
+            action = random.choice(self.get_maxQ(state))
 
         return action
 
@@ -195,7 +202,8 @@ def run():
     #   display      - set to False to disable the GUI if PyGame is enabled
     #   log_metrics  - set to True to log trial and simulation results to /logs
     #   optimized    - set to True to change the default log file name
-    sim = Simulator(env,update_delay = 0.01,log_metrics=True,display=False,optimized=True)
+    sim = Simulator(env,log_metrics=True,update_delay = 0.01,display=False,optimized=True)
+    # sim = Simulator(env,log_metrics=True,update_delay = 0.01,display=False)
     # update_delay = 0.01,
 
     ##############
@@ -204,6 +212,7 @@ def run():
     #   tolerance  - epsilon tolerance before beginning testing, default is 0.05
     #   n_test     - discrete number of testing trials to perform, default is 0
     sim.run(n_test=10,tolerance=.00001)
+    # sim.run(n_test=10)
 
 
 if __name__ == '__main__':
