@@ -11912,7 +11912,7 @@ Agent idled at a green light with no oncoming traffic. (rewarded -5.98)</code></
 <pre><code>- *In the *`agent.py`* Python file, choose three flags that can be set and explain how they change the simulation.*
 
     display     - This flag can be used to toggle the GUI screen (False to disable)
-    num_dummies - controls the traffic, or number of other cars in environement.
+    num_dummies - controls the traffic, or number of other cars in environement. It would be easy to reach destination when less traffic is present. But if agent has to be good more dummies would help better train the cab with all possible test cases.
     grid_size   - How big our map is or area is, larget the size more intersections and bigger map.
 
 </code></pre>
@@ -13095,7 +13095,7 @@ AAAAAElFTkSuQmCC
 </code></pre>
 <p>What kind of rewards is the agent receiving for its actions? Do the rewards suggest it has been penalized heavily?</p>
 
-<pre><code>Yes,Since user is making lot of bad decissions, most of the time he is penalized, and when agent does a mistake twice in a row he has been penalized more badly.
+<pre><code>Yes,Since user is making lot of bad decissions, most of the time he is penalized.
 
 </code></pre>
 <p>As the number of trials increases, does the outcome of results change significantly?
@@ -16104,7 +16104,7 @@ alpha = 0.8, I have varied learning parameter, If it's close to 1 just gives a l
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong> State-action rewards from Q-Learning</strong></p>
-<p>Stopping at red signal is ideal choice. Thus having lot of weight.</p>
+<p>Stopping at red signal when turning left is ideal choice. Thus having lot of weight.</p>
 <p>('left', 'red', None, False)</p>
 <p>-- forward : -10.00</p>
 <p>-- None : 1.34</p>
@@ -16148,8 +16148,8 @@ That would be the case in ideal world. It could help if there is lot of traffic 
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong>
-The agent isn't aware about the other vehicles in environement so predicting future rewards doesn't make sense, since It cannot see the future traffic in real world .</p>
-<p>The environement is independent in every simulation, say if a traffic jam happens at a particular place. It's not necessary it happens there everytime. So it's not ideal to rely on future rewards.</p>
+The agent isn't aware only about the next waypoint it has to take, making it blind to any future rewards and including it won't make sense.</p>
+<p>The environement is independent in every simulation, say if a traffic jam happens at a particular place. It's not necessary it happens there everytime. So it's not ideal to rely on future rewards. There are also no patterns repeating in order to have predictable future rewards.</p>
 
 </div>
 </div>
