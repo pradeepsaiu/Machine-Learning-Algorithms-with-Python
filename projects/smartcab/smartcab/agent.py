@@ -28,8 +28,8 @@ class LearningAgent(Agent):
     def decay(self):
         """Decays the epsilon value using 1/(t*t)
            t = number of trials """
-        # self.epsilon = self.epsilon - .05
-        self.epsilon = 1./(self.trails*self.trails)
+        self.epsilon = self.epsilon - .05
+        # self.epsilon = 1./(self.trails*self.trails)
 
 
     def reset(self, destination=None, testing=False):
@@ -82,17 +82,7 @@ class LearningAgent(Agent):
         ###########
         # Calculate the maximum Q-value of all actions for a given state
 
-        temp_max = self.Q[state][ next(iter(self.Q[state])) ]
-        maxQ = []
-        for key,value in self.Q[state].iteritems():
-            if( temp_max < value ):
-                maxQ = []
-                maxQ.append(key)
-                temp_max = value
-            elif( temp_max == value):
-                maxQ.append(key)
-            else:
-                pass
+        maxQ = self.Q[state][max(self.Q[state],key = self.Q[state].get)]
 
         return maxQ
 
@@ -106,7 +96,7 @@ class LearningAgent(Agent):
         # When learning, check if the 'state' is not in the Q-table
         # If it is not, create a new dictionary for that state
         #   Then, for each action available, set the initial Q-value to 0.0
-        if state not in self.Q:
+        if self.learning == True and state not in self.Q:
             self.Q[state] = dict(dict())
             for each in self.valid_actions:
                 self.Q[state][each] = 0.0
@@ -132,9 +122,13 @@ class LearningAgent(Agent):
 
         if(self.learning == False or choice < self.epsilon*100):
             action = random.choice(self.valid_actions)
-        else:
-            action = random.choice(self.get_maxQ(state))
-
+        elif(self.learning == True):
+            high = self.get_maxQ(state)
+            action_set = []
+            for key,value in self.Q[state].iteritems():
+                if(value == high):
+                    action_set.append(key)
+            action = random.choice(action_set)
         return action
 
 
@@ -149,7 +143,7 @@ class LearningAgent(Agent):
         # When learning, implement the value iteration update rule
         #   Use only the learning rate 'alpha' (do not use the discount factor 'gamma')
         #since gamma=0
-        self.Q[state][action] = self.Q[state][action] + self.alpha *( reward - self.Q[state][action])
+        self.Q[state][action] += self.alpha *( reward - self.Q[state][action])
 
         return
 
@@ -186,15 +180,15 @@ def run():
     #    * alpha   - continuous value for the learning rate, default is 0.5
     agent = env.create_agent(LearningAgent)
     agent.learning = True
-    agent.epsilon = 1
-    agent.alpha = .8
+    # agent.epsilon = 1
+    # agent.alpha = .8
     ##############
     # Follow the driving agent
     # Flags:
     #   enforce_deadline - set to True to enforce a deadline metric
     env.set_primary_agent(agent)
     #optimized settings
-    env.enforce_deadline = True
+    # env.enforce_deadline = True
     ##############
     # Create the simulation
     # Flags:
@@ -202,8 +196,8 @@ def run():
     #   display      - set to False to disable the GUI if PyGame is enabled
     #   log_metrics  - set to True to log trial and simulation results to /logs
     #   optimized    - set to True to change the default log file name
-    sim = Simulator(env,log_metrics=True,update_delay = 0.01,display=False,optimized=True)
-    # sim = Simulator(env,log_metrics=True,update_delay = 0.01,display=False)
+    # sim = Simulator(env,log_metrics=True,update_delay = 0.01,display=True,optimized=True)
+    sim = Simulator(env,log_metrics=True,update_delay = 0.01,display=True)
     # update_delay = 0.01,
 
     ##############
@@ -211,8 +205,8 @@ def run():
     # Flags:
     #   tolerance  - epsilon tolerance before beginning testing, default is 0.05
     #   n_test     - discrete number of testing trials to perform, default is 0
-    sim.run(n_test=10,tolerance=.00001)
-    # sim.run(n_test=10)
+    # sim.run(n_test=100,tolerance=.00001)
+    sim.run(n_test=10)
 
 
 if __name__ == '__main__':
