@@ -1,0 +1,4 @@
+docs: Added broader description of basic ML techniques used
+
+Described various types of Machine Learning techniques used in the
+projects. A brief description about all topics.
