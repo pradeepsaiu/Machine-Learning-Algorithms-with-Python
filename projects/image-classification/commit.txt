@@ -1,6 +1,0 @@
-feat: Added Convolutional Neural Networks
-
-Implemented Convolutional Neural Networks using Tensor flow on  CIFAR-10 dataset
-Used 3 2d convolution with maxpooling followed by 3 fully connected layers.
-Added dropout for few of the layers. This is the initial model works with 50%
-accuracy on validation dataset.
