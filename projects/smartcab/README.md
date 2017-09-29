@@ -1,6 +1,8 @@
-# Machine Learning Engineer Nanodegree
 # Reinforcement Learning
 ## Project: Train a Smartcab How to Drive
+
+### Blog
+Hight level understanding of the code can be found in my [blog](https://pradeepsaiblog.wordpress.com/2017/09/24/first-blog-post/).
 
 ### Install
 
@@ -19,3 +21,4 @@ In a terminal or command window, navigate to the top-level project directory `sm
 ```python -m smartcab.agent```
 
 This will run the `agent.py` file and execute your agent code.
+
